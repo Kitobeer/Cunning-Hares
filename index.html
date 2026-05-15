@@ -3,14 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Командный список задач</title>
+    <title>Командный список задач — Notion style</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Иконки из Font Awesome (для плюсика и фильтров) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <h1>Список задач нашей команды</h1>
-        <p>Проект создан командой Cunning Hares</p>
+        <h1>Список задач</h1>
+
+        <!-- Таблица задач -->
+        <div class="tasks-table">
+            <!-- Заголовки колонок -->
+            <div class="table-header">
+                <div class="col-status">Статус</div>
+                <div class="col-task">Задание</div>
+                <div class="col-assignee">Исполнитель</div>
+            </div>
+
+            <!-- Строки задач будут добавляться сюда через JS -->
+            <div id="taskList" class="table-body"></div>
+
+            <!-- Строка добавления новой задачи -->
+            <div class="table-footer">
+                <div class="new-task-row" id="newTaskRow">
+                    <div class="col-status">
+                        <select id="newTaskStatus" class="status-select">
+                            <option value="in-progress">В процессе</option>
+                            <option value="done">Сделано</option>
+                            <option value="abandoned">Брошено</option>
+                        </select>
+                    </div>
+                    <div class="col-task">
+                        <input type="text" id="taskInput" placeholder="Новая задача...">
+                    </div>
+                    <div class="col-assignee">
+                        <input type="text" id="assigneeInput" placeholder="Исполнитель">
+                    </div>
+                    <div class="col-add">
+                        <button id="addButton"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Фильтры внизу -->
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all"><i class="fas fa-list"></i> Все</button>
+            <button class="filter-btn" data-filter="in-progress"><i class="fas fa-spinner"></i> В процессе</button>
+            <button class="filter-btn" data-filter="done"><i class="fas fa-check-circle"></i> Сделано</button>
+            <button class="filter-btn" data-filter="abandoned"><i class="fas fa-trash-alt"></i> Брошено</button>
+        </div>
+
+        <!-- Счётчик -->
+        <div class="task-counter">
+            <span id="taskCount">Задач: 0</span>
+        </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
