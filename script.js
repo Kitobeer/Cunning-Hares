@@ -14,6 +14,7 @@ const filterButtons = document.querySelectorAll('.filter-btn');
 function addTask() {
     const taskText = taskInput.value.trim();
     const assignee = assigneeInput.value.trim();
+    const status = document.getElementById('newTaskStatus').value;
 
     // Проверка на пустые поля
     if (taskText === '') {
@@ -31,7 +32,7 @@ function addTask() {
         id: Date.now(),
         text: taskText,
         assignee: assignee,
-        completed: false
+        status: 'in-progress'
     };
 
     // Добавляем в массив
@@ -52,10 +53,8 @@ function renderTasks() {
 
     // Фильтруем задачи
     let filteredTasks = tasks;
-    if (currentFilter === 'active') {
-        filteredTasks = tasks.filter(task => !task.completed);
-    } else if (currentFilter === 'completed') {
-        filteredTasks = tasks.filter(task => task.completed);
+    if (currentFilter !== 'all') {
+        filteredTasks = tasks.filter(task => task.status === currentFilter);
     }
 
     // Создаём элементы для каждой задачи
@@ -84,10 +83,10 @@ function renderTasks() {
 }
 
 // Функция переключения статуса задачи
-function toggleTask(id) {
+function updateTaskStatus(id, newStatus) {
     const task = tasks.find(t => t.id === id);
     if (task) {
-        task.completed = !task.completed;
+        task.status = newStatus;
         renderTasks();
     }
 }
@@ -102,8 +101,10 @@ function deleteTask(id) {
 
 // Функция обновления счётчика
 function updateCounter() {
-    const activeTasks = tasks.filter(t => !t.completed).length;
-    taskCount.textContent = `Задач: ${tasks.length} | Активных: ${activeTasks}`;
+    const inProgress = tasks.filter(t => t.status === 'in-progress').length;
+    const done = tasks.filter(t => t.status === 'done').length;
+    const abandoned = tasks.filter(t => t.status === 'abandoned').length;
+    taskCountSpan.textContent = `Всего: ${tasks.length} | В процессе: ${inProgress} | Сделано: ${done} | Брошено: ${abandoned}`;
 }
 
 // Функция установки фильтра
