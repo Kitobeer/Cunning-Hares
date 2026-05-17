@@ -33,4 +33,4 @@
 
 1. Клонируйте репозиторий:
 ```bash
-git clone https://github.com/pllln/team-todo-list.git
+git clone https://github.com/Kitobeer/team-todo-list.git
